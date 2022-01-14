@@ -5,10 +5,9 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const mongoose = require("mongoose");
 
-const userRouter = require("./routes/users");
-// const workoutRouter = require("./routes/workout");
+const usersRouter = require('./routes/users');
+const gamesRouter = require('./routes/games')
 // const { notFound, errorHandler } = require("./middleware/error");
-// const verifyToken = require("./middleware/verifyToken");
 
 //Connect to database
 const dbUsername = "adma";
@@ -37,8 +36,8 @@ app.use(cors({ origin: "*" }));
 
 //Routes
 app.get("/", (req, res) => res.json("Hello"));
-// app.use("/workout", verifyToken, workoutRouter);
-app.use("/users", userRouter);
+app.use("/users", usersRouter);
+app.use('/games', gamesRouter);
 
 //Error handling
 // app.use(notFound);
