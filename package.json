@@ -1,0 +1,30 @@
+{
+  "name": "admagames",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src",
+    "dev": "nodemon src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chrobryknur/ADMAGames.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chrobryknur/ADMAGames/issues"
+  },
+  "homepage": "https://github.com/chrobryknur/ADMAGames#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "express": "^4.17.2",
+    "express-session": "^1.17.2",
+    "mongoose": "^6.1.6",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.15"
+  }
+}
