@@ -17,6 +17,10 @@ mongoose.connect(dbURI);
 
 const app = express();
 
+app.set('view engine', 'ejs');
+app.set('views', 'src/views');
+app.use(express.static('src/public'));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -35,7 +39,7 @@ app.use(cors({ origin: "*" }));
 
 
 //Routes
-app.get("/", (req, res) => res.json("Hello"));
+app.get("/", (req, res) => res.redirect('login'));
 app.use("/users", usersRouter);
 app.use('/games', gamesRouter);
 

@@ -33,7 +33,7 @@ router.post('/register', /*userValidation,*/ async (req, res, next) => {
   User.create(user)
     .then(({ _id, admin, cart }) => {
       req.session.user = { _id, admin, cartSize: cart.length }
-      res.redirect(admin ? '/admin/games' : '/games');
+      res.redirect(admin ? '/games/admin' : '/games/user');
     })
     .catch((error) => next(error));
 });
@@ -57,12 +57,12 @@ router.post('/login', /*userValidation,*/ async (req, res, next) => {
 
   const { _id, admin, cart } = user;
   req.session.user = { _id, admin, cartSize: cart.length };
-  res.redirect(admin ? '/admin/games' : '/games');
+  res.redirect(admin ? '/games/admin' : '/games/user');
 });
 
-router.delete('/logout', async (req, res, next) => {
+router.post('/logout', async (req, res, next) => {
   req.session.destroy();
-  res.json({ message: 'Success' });
+  res.redirect('/');
 });
 
 router.put('/cart/add', async (req, res, next) => {
@@ -78,7 +78,7 @@ router.put('/cart/add', async (req, res, next) => {
   user.save()
     .then(() => {
       req.session.user.cartSize += 1;
-      res.redirect('/games');
+      res.redirect('/user/games');
     })
     .catch((error) => next(error));
 });

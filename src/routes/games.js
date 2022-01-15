@@ -1,5 +1,4 @@
 const { Router } = require('express');
-
 const { Game } = require('../models/game');
 
 const titleUsedError = (title) => new Error(`Title already used ${title}`);
@@ -7,9 +6,21 @@ const invalidGameError = () => new Error('Game not recognized');
 
 const router = Router();
 
-router.get('/', async (req, res) => {
+router.get('/guest', async (req, res, next) => {
   Game.find({})
-    .then((games) => res.json(games))
+    .then((games) => res.render('guest/games', {games}))
+    .catch((error) => next(error));
+});
+
+router.get('/user', async (req, res, next) => {
+  Game.find({})
+    .then((games) => res.render('user/games', {games}))
+    .catch((error) => next(error));
+});
+
+router.get('/admin', async (req, res, next) => {
+  Game.find({})
+    .then((games) => res.render('admin/games', {games}))
     .catch((error) => next(error));
 });
 
@@ -28,7 +39,7 @@ router.post('/', /*gameValidation,*/ async (req, res, next) => {
 
   const game = req.body;
   Game.create(game)
-    .then(() => res.redirect('/admin/games'))
+    .then(() => res.redirect('/games/admin'))
     .catch((error) => next(error));
 });
 
