@@ -1,0 +1,31 @@
+<!-- views/guest/login.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Starting page</title>
+</head>
+<body>
+  <form method="POST" action="/users/login">
+    <label for="email">Email: </label><br>
+    <input type="text" name="email"><br>
+    <label for="password">Password: </label><br>
+    <input type="text" name="password"><br>
+    <button type="submit">Log in</button>
+  </form>
+  <br>
+  <form method="POST" action="/users/register">
+    <label for="email">Email: </label><br>
+    <input type="text" name="email"><br>
+    <label for="password">Password: </label><br>
+    <input type="text" name="password"><br>
+    <label for="name">Name: </label><br>
+    <input type="text" name="name"><br>
+    <label for="surname">Surname: </label><br>
+    <input type="text" name="surname"><br>
+    <button type="submit">Register</button>
+  </form>
+</body>
+</html>

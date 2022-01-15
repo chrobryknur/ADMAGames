@@ -1,0 +1,33 @@
+<!-- views/admin/games.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Admin</title>
+</head>
+<body>
+  <form method="POST" action="/users/logout">
+    <button type="submit">Logout</button>
+  </form>
+  <form method="POST" action="/games">
+    <label for="title">Title: </label><br>
+    <input type="text" name="title"><br>
+    <label for="price">Price: </label><br>
+    <input type="text" name="price"><br>
+    <label for="year">Year: </label><br>
+    <input type="text" name="year"><br>
+    <label for="category">Category: </label><br>
+    <input type="text" name="category"><br>
+    <label for="miniatureUrl">Miniature: </label><br>
+    <input type="text" name="miniatureUrl"><br>
+    <label for="description">Description: </label><br>
+    <input type="text" name="description"><br>
+    <button type="submit">Add game</button>
+  </form>
+  <% games.forEach( game => { %>
+    <li> <%= game.title %> </li>
+  <% }) %>
+</body>
+</html>
