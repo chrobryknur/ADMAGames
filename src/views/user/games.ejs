@@ -9,11 +9,18 @@
 </head>
 <body>
   <h2>Games user panel</h2>
+  <h3>Cart</h3>
+  <p> <%= cartSize %> </p>
   <form method="POST" action="/users/logout">
     <button type="submit">Logout</button>
   </form>
+  <form method="GET" action="/users/cart">
+    <button type="submit">Show cart</button>
+  </form>
   <% games.forEach( game => { %>
-    <li> <%= game.title %> </li>
+    <form method="POST" action='/users/cart/add/<%= game._id %>'>
+      <li> <%= game.title %> <%= game.price %> PLN <button type="submit">Add to cart</button></li>
+    </form>
   <% }) %>
 </body>
 </html>

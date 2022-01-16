@@ -1,23 +1,24 @@
-<!-- views/admin/users.ejs -->
+<!-- views/user/cart.ejs -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Admin - users administraion page</title>
+  <title>Games</title>
 </head>
 <body>
-  <h2>Users administration panel</h2>
+  <h2>Cart user panel</h2>
+  <p> <%= user.cart.length %> </p>
   <form method="POST" action="/users/logout">
     <button type="submit">Logout</button>
   </form>
   <form method="GET" action="/games">
-    <button type="submit">Games</button>
+    <button type="submit">Browse games</button>
   </form>
-  <% users.forEach( user => { %>
-    <form method="POST" action="/users/delete/<%= user._id %>">
-      <li> <%= user.email %> <%= user.name %> <%= user.surname %><button type="submit">Delete user</button></li>
+  <% user.cart.forEach( game => { %>
+    <form method="POST" action='/users/cart/remove/<%= game._id %>'>
+      <li> <%= game.title %> <%= game.price %> PLN <button type="submit">Remove</button></li>
     </form>
   <% }) %>
 </body>
