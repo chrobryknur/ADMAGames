@@ -83,11 +83,17 @@ router.put('/cart/add', async (req, res, next) => {
     .catch((error) => next(error));
 });
 
-router.delete('/:_id', async (req, res, next) => {
+router.get('/admin', async (req, res, next) => {
+  const users = await User.find({});
+  // Add validation and error handling
+  res.render('admin/users', {users});
+})
+
+router.post('/admin/delete/:_id', async (req, res, next) => {
   const { _id } = req.params;
 
   User.deleteOne({ _id })
-    .then(({ deletedCount }) => res.json({ deletedCount }))
+    .then(({ deletedCount }) => res.redirect('/users/admin'))
     .catch((error) => next(error));
 });
 

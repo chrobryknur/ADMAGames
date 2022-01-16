@@ -8,8 +8,12 @@
   <title>Admin - games administration page</title>
 </head>
 <body>
+  <h2>Games administration panel</h2>
   <form method="POST" action="/users/logout">
     <button type="submit">Logout</button>
+  </form>
+  <form method="GET" action="/users/admin">
+    <button type="submit">Users</button>
   </form>
   <form method="POST" action="/games">
     <label for="title">Title: </label><br>
