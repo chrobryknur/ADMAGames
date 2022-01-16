@@ -43,4 +43,12 @@ router.post('/', /*gameValidation,*/ async (req, res, next) => {
     .catch((error) => next(error));
 });
 
+router.post('/delete/:_id', async (req, res, next) => {
+  const { _id } = req.params;
+
+  Game.deleteOne({ _id })
+    .then(({ deletedCount }) => res.redirect('/games/admin'))
+    .catch((error) => next(error));
+})
+
 module.exports = router;
