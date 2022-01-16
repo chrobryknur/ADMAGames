@@ -3,7 +3,8 @@ const bcrypt = require('bcrypt');
 
 const User = require('../models/user');
 const { Game } = require('../models/game');
-// const userValidation = require('../middleware/validation/user');
+const userValidation = require('../middleware/userValidation');
+const adminVerification = require('../middleware/adminVerification');
 
 const emailUsedError = (email) => new Error(`Email already used ${email}`);
 const loginError = () => new Error('Invalid username or password');
@@ -12,7 +13,7 @@ const invalidGameError = () => new Error('Game not recognized');
 
 const router = Router();
 
-router.post('/register', /*userValidation,*/ async (req, res, next) => {
+router.post('/register', userValidation, async (req, res, next) => {
   const { email, password } = req.body;
 
   const { emailUsed, error } = await User.findOne({ email })
@@ -33,15 +34,10 @@ router.post('/register', /*userValidation,*/ async (req, res, next) => {
   User.create(user)
     .then(({ _id, admin, cart }) => {
       req.session.user = { _id, admin, cartSize: cart.length }
-      res.redirect(admin ? '/games/admin' : '/games/user');
+      res.redirect('/games');
     })
     .catch((error) => next(error));
 });
-
-router.get('/', (req, res) => {
-  const user = req.session.user;
-  res.json(user);
-})
 
 router.post('/login', /*userValidation,*/ async (req, res, next) => {
   const { email, password } = req.body;
@@ -57,7 +53,7 @@ router.post('/login', /*userValidation,*/ async (req, res, next) => {
 
   const { _id, admin, cart } = user;
   req.session.user = { _id, admin, cartSize: cart.length };
-  res.redirect(admin ? '/games/admin' : '/games/user');
+  res.redirect('/games');
 });
 
 router.post('/logout', async (req, res, next) => {
@@ -65,35 +61,57 @@ router.post('/logout', async (req, res, next) => {
   res.redirect('/');
 });
 
-router.put('/cart/add', async (req, res, next) => {
+router.get('/cart', (req, res, next) => {
+  const { user } = req.session;
+  if (!user || user.admin) return res.redirect('/games');
+
+  User.findById(user._id)
+    .then((user) => res.render('user/cart', { user }))
+    .catch((error) => next(error));
+});
+
+router.post('/cart/add/:gameId', async (req, res, next) => {
   const userId = req.session.user._id;
   const user = await User.findById(userId);
   if (!user) return next(invalidUserError());
 
-  const { gameId } = req.body;
+  const { gameId } = req.params;
   const game = await Game.findById(gameId);
   if (!game) return next(invalidGameError());
+  const { _id, ...cartGame } = game._doc;
 
-  user.cart.push(game);
-  user.save()
-    .then(() => {
-      req.session.user.cartSize += 1;
-      res.redirect('/user/games');
+  User.findByIdAndUpdate(userId, { $push: { cart: cartGame }}, { new: true })
+    .then((user) => {
+      req.session.user.cartSize = user.cart.length;
+      res.redirect('/games');
     })
     .catch((error) => next(error));
 });
 
-router.get('/admin', async (req, res, next) => {
-  const users = await User.find({});
-  // Add validation and error handling
-  res.render('admin/users', {users});
+router.post('/cart/remove/:gameId', async (req, res, next) => {
+  const userId = req.session.user._id;
+  const user = await User.findById(userId);
+  if (!user) return next(invalidUserError());
+
+  User.findByIdAndUpdate( userId, { $pull: { cart: { _id: req.params.gameId }}}, { new: true })
+    .then((user) => {
+      req.session.user.cartSize = user.cart.length;
+      res.redirect('/users/cart');
+    })
+    .catch((error) => next(error));
+});
+
+router.get('/', adminVerification, async (req, res, next) => {
+  User.find({})
+    .then((users) => res.render('admin/users', {users}))
+    .catch((error) => next(error));
 })
 
-router.post('/admin/delete/:_id', async (req, res, next) => {
+router.post('/delete/:_id', adminVerification, async (req, res, next) => {
   const { _id } = req.params;
 
   User.deleteOne({ _id })
-    .then(({ deletedCount }) => res.redirect('/users/admin'))
+    .then(({ deletedCount }) => res.redirect('/users'))
     .catch((error) => next(error));
 });
 
