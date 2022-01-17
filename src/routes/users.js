@@ -70,6 +70,14 @@ router.get('/cart', (req, res, next) => {
     .catch((error) => next(error));
 });
 
+router.get('/cart/:_id', adminVerification, (req, res, next) => {
+  const { _id } = req.params;
+
+  User.findById(_id)
+    .then((user) => res.render('admin/cart', { user }))
+    .catch((error) => next(error));
+});
+
 router.post('/cart/add/:gameId', async (req, res, next) => {
   const userId = req.session.user._id;
   const user = await User.findById(userId);
@@ -107,12 +115,33 @@ router.get('/', adminVerification, async (req, res, next) => {
     .catch((error) => next(error));
 })
 
+router.post('/admin/:_id', adminVerification, async (req, res, next) => {
+  const { _id } = req.params;
+  const { action } = req;
+
+  console.log(action);
+
+  if (action === 'delete') {
+    User.deleteOne({ _id })
+      .then(({ deletedCount }) => res.redirect('/users'))
+      .catch((error) => next(error));
+  } else if (action === 'admin') {
+    const user = await User.findById(_id);
+    User.updateOne({ _id }, { admin: !user.admin})
+      .then(() => {
+        res.redirect('/users');
+      })
+      .catch((error) => next(error));
+  } else if (action === 'cart') {
+    res.redirect(`/users/cart/${_id}`);
+  }
+
+
+})
+
 router.post('/delete/:_id', adminVerification, async (req, res, next) => {
   const { _id } = req.params;
 
-  User.deleteOne({ _id })
-    .then(({ deletedCount }) => res.redirect('/users'))
-    .catch((error) => next(error));
 });
 
 module.exports = router;

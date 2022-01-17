@@ -4,23 +4,13 @@ const { Schema } = mongoose;
 
 const options = { timestapms: true };
 
-const CartGameSchema = new Schema({
-  title: String,
-  price: Number,
-  year: Number,
-  category: String,
-  tags: [String],
-  miniatureUrl: String,
-  description: String,
-});
-
 const UserSchema = new Schema({
   email: String,
   password: String,
   name: String,
   surname: String,
   admin: { type: Boolean, default: false },
-  cart: [CartGameSchema],
+  cart: [GameSchema],
 }, options);
 
 const User = mongoose.model("User", UserSchema);

@@ -1,0 +1,23 @@
+<!-- views/admin/cart.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Games</title>
+</head>
+<body>
+  <h2>Cart administration panel</h2>
+  <p> <%= user.cart.length %> </p>
+  <form method="POST" action="/users/logout">
+    <button type="submit">Logout</button>
+  </form>
+  <form method="GET" action="/users">
+    <button type="submit">Browse users</button>
+  </form>
+  <% user.cart.forEach( game => { %>
+      <li> <%= game.title %> <%= game.price %> PLN</li>
+  <% }) %>
+</body>
+</html>

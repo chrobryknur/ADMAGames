@@ -15,9 +15,17 @@
   <form method="GET" action="/games">
     <button type="submit">Games</button>
   </form>
+  <form method="GET" action="/deliveries">
+    <button type="submit">Deliveries</button>
+  </form>
   <% users.forEach( user => { %>
-    <form method="POST" action="/users/delete/<%= user._id %>">
-      <li> <%= user.email %> <%= user.name %> <%= user.surname %><button type="submit">Delete user</button></li>
+    <form method="POST" action="/users/admin/<%= user._id %>">
+      <%= user.email %> <%= user.name %> <%= user.surname %> <%= user.admin ? "Admin" : "User" %>
+      <button type="submit" name="action" value="delete">Delete user</button>
+      <button type="submit" name="action" value="admin">Toggle admin rights</button>
+      <% if (!user.admin) { %>
+        <button type="submit" name="action" value="cart">Show cart</button>
+      <% } %>
     </form>
   <% }) %>
 </body>

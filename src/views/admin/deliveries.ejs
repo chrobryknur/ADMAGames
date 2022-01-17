@@ -1,0 +1,38 @@
+<!-- views/admin/cart.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Games</title>
+</head>
+<body>
+  <h2>Deliveries administration panel</h2>
+  <form method="POST" action="/users/logout">
+    <button type="submit">Logout</button>
+  </form>
+  <form method="GET" action="/games">
+    <button type="submit">Games</button>
+  </form>
+  <form method="GET" action="/users">
+    <button type="submit">Users</button>
+  </form>
+  <form method="POST" action="/deliveries">
+    <label for="name">Name: </label><br>
+    <input type="text" name="name"><br>
+    <label for="price">Price: </label><br>
+    <input type="number" name="price"><br>
+    <label for="miniatureUrl">Miniature: </label><br>
+    <input type="text" name="miniatureUrl"><br>
+    <label for="estimatedTime">Estimated time: </label><br>
+    <input type="number" name="estimatedTime"><br>
+    <button type="submit">Add delivery</button>
+  </form>
+  <% deliveries.forEach( delivery => { %>
+    <form method="POST" action="/deliveries/delete/<%= delivery._id %>">
+      <li> <%= delivery.name %> <%= delivery.price %> PLN <%= delivery.miniatureUrl %> <%= delivery.estimatedTime %><button type="submit">Delete</button></li>
+    </form>
+  <% }) %>
+</body>
+</html>

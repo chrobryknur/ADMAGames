@@ -1,4 +1,5 @@
 const { Router } = require('express');
+const { redirect } = require('express/lib/response');
 const adminVerification = require('../middleware/adminVerification');
 const gameValidation = require('../middleware/gameValidation');
 const { Game } = require('../models/game');
@@ -34,21 +35,22 @@ router.post('/', adminVerification, gameValidation, async (req, res, next) => {
     .catch((error) => next(error));
 });
 
-router.post('/delete/:_id', adminVerification, (req, res, next) => {
+router.post('/modify/:_id', adminVerification, (req, res, next) => {
   const { _id } = req.params;
+  const { action } = req;
 
-  Game.deleteOne({ _id })
-    .then(({ deletedCount }) => res.redirect('/games'))
-    .catch((error) => next(error));
-});
+  if (action === 'delete') {
+    Game.deleteOne({ _id })
+      .then(({ deletedCount }) => res.redirect('/games'))
+      .catch((error) => next(error));
+  } else {
+    const game = req.body;
 
-router.post('/update/:_id', adminVerification, gameValidation, (req, res, next) => {
-  const { _id } = req.params;
-  const game = req.body;
+    Game.updateOne({ _id }, game)
+      .then(() => res.redirect('/games'))
+      .catch((error) => next(error));
+  }
 
-  Game.updateOne({ _id }, game)
-    .then(() => res.redirect('/games'))
-    .catch((error) => next(error));
-});
+})
 
 module.exports = router;

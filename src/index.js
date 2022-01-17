@@ -6,7 +6,9 @@ const cookieParser = require('cookie-parser');
 const mongoose = require("mongoose");
 
 const usersRouter = require('./routes/users');
-const gamesRouter = require('./routes/games')
+const gamesRouter = require('./routes/games');
+const deliveriesRouter = require('./routes/deliveries');
+const getAction = require("./middleware/getAction");
 // const { notFound, errorHandler } = require("./middleware/error");
 
 //Connect to database
@@ -33,6 +35,7 @@ app.use(session({
 }));
 
 //Middleware
+app.use(getAction);
 app.use(express.json());
 app.use(morgan("common"));
 app.use(cors({ origin: "*" }));
@@ -42,6 +45,7 @@ app.use(cors({ origin: "*" }));
 app.get("/", (req, res) => res.redirect('login'));
 app.use("/users", usersRouter);
 app.use('/games', gamesRouter);
+app.use('/deliveries', deliveriesRouter);
 
 //Error handling
 // app.use(notFound);
