@@ -1,5 +1,4 @@
 const { Router } = require('express');
-const { redirect } = require('express/lib/response');
 const adminVerification = require('../middleware/adminVerification');
 const gameValidation = require('../middleware/gameValidation');
 const { Game } = require('../models/game');

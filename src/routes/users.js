@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const bcrypt = require('bcrypt');
 
-const User = require('../models/user');
+const { User } = require('../models/user');
 const { Game } = require('../models/game');
 const userValidation = require('../middleware/userValidation');
 const adminVerification = require('../middleware/adminVerification');

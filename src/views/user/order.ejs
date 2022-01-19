@@ -1,0 +1,54 @@
+<!-- views/user/order.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Order</title>
+</head>
+<body>
+  <h2>Order user panel</h2>
+  <form method="POST" action="/users/logout">
+    <button type="submit">Logout</button>
+  </form>
+  <form method="GET" action="/games">
+    <button type="submit">Browse games</button>
+  </form>
+  <form method="GET" action="/users/cart">
+    <button type="submit">Show cart</button>
+  </form>
+  <% cart.forEach((game, i) => { %>
+    <li> <%= i %>. <%= game.title %> <%= game.price %> PLN </li>
+  <% }) %>
+  <form method="POST" action="/orders">
+    <label for="name">Name: </label><br>
+    <input type="text" name="name" value="<%= name %>"><br>
+    <label for="surname">Surname: </label><br>
+    <input type="text" name="surname" value="<%= surname %>"><br>
+    <label for="email">Email: </label><br>
+    <input type="email" name="email" value="<%= email %>"><br>
+    <label for="city">City: </label><br>
+    <input type="text" name="city"><br>
+    <label for="street">Street: </label><br>
+    <input type="text" name="street"><br>
+    <label for="building">Building number: </label><br>
+    <input type="text" name="building"><br>
+    <label for="apartment">Apartment number: </label><br>
+    <input type="text" name="apartment"><br>
+    <label for="postalCode">Postal code: </label><br>
+    <input type="text" name="postalCode"><br>
+    <label for="phoneNumber">Phone number: </label><br>
+    <input type="text" name="phoneNumber"><br>
+    <label for="delivery">Delivery: </label><br>
+    <select name="delivery">
+      <% deliveries.forEach((delivery) => { %>
+        <option value="<%= delivery._id %>">
+          <%= delivery.name %> <%= delivery.price %> PLN
+        </option>
+      <% }) %>
+    </select>
+    <button type="submit">Submit</button>
+  </form>
+</body>
+</html>

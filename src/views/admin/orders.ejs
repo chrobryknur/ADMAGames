@@ -1,0 +1,33 @@
+<!-- views/admin/orders.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Admin - orders administraion page</title>
+</head>
+<body>
+  <h2>Orders administration panel</h2>
+  <form method="POST" action="/users/logout">
+    <button type="submit">Logout</button>
+  </form>
+  <form method="GET" action="/games">
+    <button type="submit">Games</button>
+  </form>
+  <form method="GET" action="/deliveries">
+    <button type="submit">Deliveries</button>
+  </form>
+  <form method="GET" action="/users">
+    <button type="submit">Users</button>
+  </form>
+  <% orders.forEach((order) => { %>
+    <%= order.date %>
+    <%= order.user.name %>
+    <%= order.user.surname %>
+    <%= order.user.email %>
+    <%= order.price %>
+    <br>
+  <% }) %>
+</body>
+</html>

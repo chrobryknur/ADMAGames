@@ -8,6 +8,7 @@ const mongoose = require("mongoose");
 const usersRouter = require('./routes/users');
 const gamesRouter = require('./routes/games');
 const deliveriesRouter = require('./routes/deliveries');
+const ordersRouter = require('./routes/orders');
 const getAction = require("./middleware/getAction");
 // const { notFound, errorHandler } = require("./middleware/error");
 
@@ -46,6 +47,7 @@ app.get("/", (req, res) => res.redirect('login'));
 app.use("/users", usersRouter);
 app.use('/games', gamesRouter);
 app.use('/deliveries', deliveriesRouter);
+app.use('/orders', ordersRouter);
 
 //Error handling
 // app.use(notFound);

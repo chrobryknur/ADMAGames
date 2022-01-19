@@ -17,6 +17,9 @@
   <form method="GET" action="/users/cart">
     <button type="submit">Show cart</button>
   </form>
+  <form method="GET" action="/orders">
+    <button type="submit">Order</button>
+  </form>
   <% games.forEach( game => { %>
     <form method="POST" action='/users/cart/add/<%= game._id %>'>
       <li> <%= game.title %> <%= game.price %> PLN <button type="submit">Add to cart</button></li>

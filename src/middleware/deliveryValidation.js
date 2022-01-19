@@ -16,4 +16,4 @@ const deliveryValidation = (req, res, next) => {
     .catch((error) => res.redirect('/users/deliveries'));
 };
 
-module.exports = deliveryValidation;
+module.exports = { deliveryValidation, deliverySchema };
