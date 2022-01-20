@@ -5,33 +5,53 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="../style/bootstrap.css">
   <title>Starting page</title>
 </head>
-<body>
-  <form method="GET" action="/games">
-    <button type="submit">Games</button>
-  </form>
-
-  <form method="POST" action="/users/login">
-    <label for="email">Email: </label><br>
-    <input type="text" name="email"><br>
-    <label for="password">Password: </label><br>
-    <input type="text" name="password"><br>
-    <button type="submit">Log in</button>
-  </form>
-
-  <br>
-
-  <form method="POST" action="/users/register">
-    <label for="email">Email: </label><br>
-    <input type="text" name="email"><br>
-    <label for="password">Password: </label><br>
-    <input type="text" name="password"><br>
-    <label for="name">Name: </label><br>
-    <input type="text" name="name"><br>
-    <label for="surname">Surname: </label><br>
-    <input type="text" name="surname"><br>
-    <button type="submit">Register</button>
-  </form>
+<body class="vh-100">
+  <header class="bg-secondary d-flex flex-wrap justify-content-center py-2">
+      <h2>ADMA Games</h2>
+  </header>
+  <div class="bg-secondary">
+    <nav class="container d-flex flex-row justify-content-between bg-primary shadow px-3 py-3 rounded">
+      <form method="GET" action="/games">
+        <button class="btn btn-secondary" type="submit">Games</button>
+      </form>
+    </nav>
+    <div class="container vh-100 py-5">
+      <div class="row row-cols-2">
+        <div class="form-group col align-items-center justify-content-center">
+          <h2 class="pb-3">Register</h2>
+          <div style="width: 50%;">
+            <form method="POST" action="/users/register">
+              <label for="email">Email: </label><br>
+              <input class="form-control" type="email" name="email"><br>
+              <label for="password">Password: </label><br>
+              <input class="form-control" type="password" name="password"><br>
+              <label for="name">Name: </label><br>
+              <input class="form-control" type="text" name="name"><br>
+              <label for="surname">Surname: </label><br>
+              <input class="form-control" type="text" name="surname"><br>
+              <button class="btn btn-primary" type="submit">Register</button>
+            </form>
+          </div>
+        </div>
+        <div class="form-group col align-items-center justify-content-center">
+          <h2 class="pb-3">Log in</h2>
+          <div style="width: 50%;">
+            <form method="POST" action="/users/login">
+              <label for="email">Email: </label><br>
+              <input class="form-control" type="email" name="email"><br>
+              <label for="password">Password: </label><br>
+              <input class="form-control" type="password" name="password"><br>
+              <button class="btn btn-primary" type="submit">Log in</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="d-flex flex-wrap align-items-center justify-content-center bg-primary shadow py-4 navbar fixed-bottom">
+    </footer>
+  </div>
 </body>
 </html>
