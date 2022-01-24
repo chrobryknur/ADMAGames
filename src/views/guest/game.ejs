@@ -1,4 +1,4 @@
-<!-- views/guest/games.ejs -->
+<!-- views/user/games.ejs -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,11 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="/style/bootstrap.css">
-  <title>Games</title>
+  <title>Game - <%= game.title %></title>
 </head>
 <body class="vh-100">
   <header class="bg-secondary d-flex flex-wrap justify-content-center py-2">
-      <h2>Games guest panel</h2>
+      <h2>Game - <%= game.title %> guest panel</h2>
   </header>
   <div class="bg-secondary">
     <nav class="container d-flex flex-row justify-content-between bg-primary shadow px-3 py-3 rounded">
@@ -19,23 +19,15 @@
       </form>
     </nav>
     <div class="container vh-100 py-5">
-      <div class="row row-cols-4">
-        <% games.forEach( game => { %>
-          <div class="col">
-            <div class="d-flex flex-column bg-primary m-3 p-2">
-              <div style="height:20vh; text-align: center; overflow:hidden;">
-                <img src="<%= game.miniatureUrl %>">
-              </div>
-              <div style="width: 100%; text-align: center;">
-                <b><%= game.title %></b>
-                <p><%= game.price %> PLN</p>
-                <form method="GET" action='/games/<%=game._id%>'>
-                  <button class="btn btn-secondary" type="submit">Details</button>
-                </form>
-              </div>
-            </div>
-          </div>
-        <% }) %>
+      <div class="d-flex flex-column bg-primary m-3 p-2 rounded-2">
+        <div style="height:20vh; text-align: center; overflow:hidden;" >
+          <img src="<%= game.miniatureUrl %>">
+        </div>
+        <div style="width: 100%; text-align: center;">
+          <b><%= game.title %></b>
+          <p><%= game.price %>PLN</p>
+          <p><%= game.description %></p>
+        </div>
       </div>
     </div>
     <footer class="d-flex flex-wrap align-items-center justify-content-center bg-primary shadow py-4 navbar fixed-bottom">

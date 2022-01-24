@@ -5,56 +5,91 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="/style/bootstrap.css">
   <title>Admin - games administration page</title>
 </head>
-<body>
-  <h2>Games administration panel</h2>
-  <form method="POST" action="/users/logout">
-    <button type="submit">Logout</button>
-  </form>
-  <form method="GET" action="/users">
-    <button type="submit">Users</button>
-  </form>
-  <form method="GET" action="/deliveries">
-    <button type="submit">Deliveries</button>
-  </form>
-  <form method="GET" action="/orders">
-    <button type="submit">Orders</button>
-  </form>
-  <form method="POST" action="/games">
-    <label for="title">Title: </label><br>
-    <input type="text" name="title"><br>
-    <label for="price">Price: </label><br>
-    <input type="number" name="price"><br>
-    <label for="year">Year: </label><br>
-    <input type="number" name="year"><br>
-    <label for="category">Category: </label><br>
-    <input type="text" name="category"><br>
-    <label for="miniatureUrl">Miniature: </label><br>
-    <input type="text" name="miniatureUrl"><br>
-    <label for="description">Description: </label><br>
-    <input type="text" name="description"><br>
-    <button type="submit">Add game</button>
-  </form>
-  <% games.forEach( game => { %>
-    <form name="form" method="POST" action="/games/modify/<%= game._id %>">
-      <label for="title">Title: </label>
-      <input name="title" type="text" value="<%= game.title %>">
-      <label for="price">Price: </label>
-      <input name="price" type="number" value="<%= game.price %>">
-      <label for="year">Year: </label>
-      <input name="year" type="number" value="<%= game.year %>">
-      <label for="category">Category: </label>
-      <input name="category" type="text" value="<%= game.category %>">
-      <label for="miniatureUrl">Miniature URL: </label>
-      <input name="miniatureUrl" type="text" value="<%= game.miniatureUrl %>">
-      <label for="description">Description: </label>
-      <input name="description" type="text" value="<%= game.description %>">
-      <!-- <button type="submit" onclick="javascript: form.action='/games/delete/<%= game._id %>';">Delete</button>
-      <button type="submit" onclick="javascript: form.action='/games/update';"> -->
-      <button type="submit" name="action" value="update">Update</button>
-      <button type="submit" name="action" value="delete">Delete</button>
-    </form>
-  <% }) %>
+<body class="vh-100">
+  <header class="bg-secondary d-flex flex-wrap justify-content-center py-2">
+    <h2>Games administration panel</h2>
+  </header>
+  <div class="bg-secondary">
+    <nav class="container d-flex flex-row justify-content-between bg-primary shadow px-3 py-3 rounded">
+      <form method="GET" action="/users">
+        <button class="btn btn-secondary" type="submit">Users</button>
+      </form>
+      <form method="GET" action="/deliveries">
+        <button class="btn btn-secondary" type="submit">Deliveries</button>
+      </form>
+      <form method="GET" action="/orders">
+        <button class="btn btn-secondary" type="submit">Orders</button>
+      </form>
+      <form method="POST" action="/users/logout">
+        <button class="btn btn-secondary" type="submit">Logout</button>
+      </form>
+    </nav>
+    <div class="container vh-100 py-5">
+      <table class="table table-dark">
+        <thead>
+          <tr>
+            <th scope="col">Title</th>
+            <th scope="col">Price</th>
+            <th scope="col">Year</th>
+            <th scope="col">Category</th>
+            <th scope="col">Miniature URL</th>
+            <th scope="col">Description</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% games.forEach( game => { %>
+            <tr>
+              <form name="form" method="POST" action="/games/modify/<%= game._id %>">
+                <th scope="col"><input class="form-control" name="title" type="text" value="<%= game.title %>"></th>
+                <th scope="col"><input class="form-control" name="price" type="number" value="<%= game.price %>"></th>
+                <th scope="col"><input class="form-control" name="year" type="number" value="<%= game.year %>"></th>
+                <th scope="col"><input class="form-control" name="category" type="text" value="<%= game.category %>"></th>
+                <th scope="col"><input class="form-control" name="miniatureUrl" type="text" value="<%= game.miniatureUrl %>"></th>
+                <th scope="col"><input class="form-control" name="description" type="text" value="<%= game.description %>"></th>
+                <th scope="col"><button class="btn btn-primary" type="submit" name="action" value="update">Update</button></th>
+                <th scope="col"><button class="btn btn-secondary" type="submit" name="action" value="delete">Delete</button></th>
+              </form>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+      <div class="container">
+        <form method="POST" action="/games">
+        </form>
+        <form method="POST" action="/games">
+          <div class="row row-cols-2">
+            <div class="form-group col align-items-center justify-content-center">
+              <div style="width: 50%;">
+                <label for="title">Title: </label><br>
+                <input class="form-control" type="text" name="title"><br>
+                <label for="price">Price: </label><br>
+                <input class="form-control" type="number" name="price"><br>
+                <label for="category">Category: </label><br>
+                <input class="form-control" type="text" name="category"><br>
+              </div>
+            </div>
+            <div class="form-group col align-items-center justify-content-center">
+              <div style="width: 50%;">
+                <label for="year">Year: </label><br>
+                <input class="form-control" type="number" name="year"><br>
+                <label for="miniatureUrl">Miniature: </label><br>
+                <input class="form-control" type="text" name="miniatureUrl"><br>
+                <label for="description">Description: </label><br>
+                <input class="form-control" type="text" name="description"><br>
+                <button class="btn btn-primary" type="submit">Add game</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <footer class="d-flex flex-wrap align-items-center justify-content-center bg-primary shadow py-4 navbar fixed-bottom">
+    </footer>
+  </div>
 </body>
 </html>

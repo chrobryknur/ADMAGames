@@ -1,4 +1,5 @@
 const { Router } = require('express');
+const { date } = require('joi');
 const adminVerification = require('../middleware/adminVerification');
 const orderValidation = require('../middleware/orderValidation');
 const { Delivery } = require('../models/delivery');
@@ -19,8 +20,8 @@ router.get('/', async (req, res, next) => {
         const deliveries = await Delivery.find({})
         const { email, name, surname, cart } = await User.findById(user._id)
         return res.render('user/order', { deliveries, cart, email, name, surname })
-      } 
-      console.log(orders);
+      }
+      orders = orders.map((order) => ({ ...order._doc, date: order._doc.date.toLocaleString()}))
       return res.render('admin/orders', { orders });
     })
     .catch((error) => next(error));

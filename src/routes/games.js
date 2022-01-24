@@ -49,7 +49,17 @@ router.post('/modify/:_id', adminVerification, (req, res, next) => {
       .then(() => res.redirect('/games'))
       .catch((error) => next(error));
   }
+});
 
-})
+router.get('/:_id', (req, res, next) => {
+  const { _id } = req.params;
+  Game.findById(_id)
+    .then((game) => {
+      const { user } = req.session;
+      if (!user) return res.render('guest/game', { game });
+      return res.render('user/game', { game, cartSize: user.cartSize });
+    })
+    .catch((error) => next(error));
+});
 
 module.exports = router;

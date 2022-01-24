@@ -5,24 +5,49 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Games</title>
+  <link rel="stylesheet" href="/style/bootstrap.css">
+  <title>Cart</title>
 </head>
-<body>
-  <h2>Cart user panel</h2>
-  <p> <%= user.cart.length %> </p>
-  <form method="POST" action="/users/logout">
-    <button type="submit">Logout</button>
-  </form>
-  <form method="GET" action="/games">
-    <button type="submit">Browse games</button>
-  </form>
-  <form method="GET" action="/orders">
-    <button type="submit">Order</button>
-  </form>
-  <% user.cart.forEach( game => { %>
-    <form method="POST" action='/users/cart/remove/<%= game._id %>'>
-      <li> <%= game.title %> <%= game.price %> PLN <button type="submit">Remove</button></li>
-    </form>
-  <% }) %>
+<body class="vh-100">
+  <header class="bg-secondary d-flex flex-wrap justify-content-center py-2">
+    <h2>User cart panel</h2>
+  </header>
+  <div class="bg-secondary">
+    <nav class="container d-flex flex-row justify-content-between bg-primary shadow px-3 py-3 rounded">
+      <form method="GET" action="/games">
+        <button class="btn btn-secondary" type="submit">Browse games</button>
+      </form>
+      <form method="GET" action="/orders">
+        <button class="btn btn-secondary" type="submit">Order</button>
+      </form>
+      <form method="POST" action="/users/logout">
+        <button class="btn btn-secondary" type="submit">Logout</button>
+      </form>
+    </nav>
+    <div class="container vh-100 py-5">
+      <table class="table table-dark rounded-2">
+        <thead>
+          <tr>
+            <th scope="col">Title</th>
+            <th scope="col">Price</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% user.cart.forEach( game => { %>
+            <tr>
+              <form method="POST" action='/users/cart/remove/<%= game._id %>'>
+                <td scope="col"><%= game.title %></td>
+                <td scope="col"><%= game.price %></td>
+                <td scope="col"><button class="btn btn-primary" type="submit">Delete</button></td>
+              </form>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+    <footer class="d-flex flex-wrap align-items-center justify-content-center bg-primary shadow py-4 navbar fixed-bottom">
+    </footer>
+  </div>
 </body>
 </html>

@@ -5,28 +5,63 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="/style/bootstrap.css">
   <title>Admin - users administraion page</title>
 </head>
 <body>
-  <h2>Users administration panel</h2>
-  <form method="POST" action="/users/logout">
-    <button type="submit">Logout</button>
-  </form>
-  <form method="GET" action="/games">
-    <button type="submit">Games</button>
-  </form>
-  <form method="GET" action="/deliveries">
-    <button type="submit">Deliveries</button>
-  </form>
-  <% users.forEach( user => { %>
-    <form method="POST" action="/users/admin/<%= user._id %>">
-      <%= user.email %> <%= user.name %> <%= user.surname %> <%= user.admin ? "Admin" : "User" %>
-      <button type="submit" name="action" value="delete">Delete user</button>
-      <button type="submit" name="action" value="admin">Toggle admin rights</button>
-      <% if (!user.admin) { %>
-        <button type="submit" name="action" value="cart">Show cart</button>
-      <% } %>
-    </form>
-  <% }) %>
+  <header class="bg-secondary d-flex flex-wrap justify-content-center py-2">
+    <h2>Users administration panel</h2>
+  </header>
+  <div class="bg-secondary">
+    <nav class="container d-flex flex-row justify-content-between bg-primary shadow px-3 py-3 rounded">
+      <form method="GET" action="/games">
+        <button class="btn btn-secondary" type="submit">Games</button>
+      </form>
+      <form method="GET" action="/deliveries">
+        <button class="btn btn-secondary" type="submit">Deliveries</button>
+      </form>
+      <form method="GET" action="/orders">
+        <button class="btn btn-secondary" type="submit">Orders</button>
+      </form>
+      <form method="POST" action="/users/logout">
+        <button class="btn btn-secondary" type="submit">Logout</button>
+      </form>
+    </nav>
+    <div class="container vh-100 py-5">
+      <table class="table table-dark rounded-2">
+        <thead>
+          <tr>
+            <th scope="col">Email</th>
+            <th scope="col">Name</th>
+            <th scope="col">Surname</th>
+            <th scope="col">Type</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+        <% users.forEach( user => { %>
+          <tr>
+            <form method="POST" action="/users/admin/<%= user._id %>">
+              <td><%= user.email %></td>
+              <td><%= user.name %></td>
+              <td><%= user.surname %></td>
+              <td><%= user.admin ? "Admin" : "User" %></td>
+              <td><button class="btn btn-primary" type="submit" name="action" value="delete">Delete user</button></td>
+              <td><button class="btn btn-primary" type="submit" name="action" value="admin">Toggle admin rights</button></td>
+              <td>
+                <% if (!user.admin) { %>
+                  <button class="btn btn-primary" type="submit" name="action" value="cart">Show cart</button>
+                <% } %>
+              </td>
+            </form>
+          </tr>
+        <% }) %>
+        </tbody>
+      </table>
+    </div>
+    <footer class="d-flex flex-wrap align-items-center justify-content-center bg-primary shadow py-4 navbar fixed-bottom">
+    </footer>
 </body>
 </html>

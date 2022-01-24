@@ -5,34 +5,71 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="/style/bootstrap.css">
   <title>Games</title>
 </head>
-<body>
-  <h2>Deliveries administration panel</h2>
-  <form method="POST" action="/users/logout">
-    <button type="submit">Logout</button>
-  </form>
-  <form method="GET" action="/games">
-    <button type="submit">Games</button>
-  </form>
-  <form method="GET" action="/users">
-    <button type="submit">Users</button>
-  </form>
-  <form method="POST" action="/deliveries">
-    <label for="name">Name: </label><br>
-    <input type="text" name="name"><br>
-    <label for="price">Price: </label><br>
-    <input type="number" name="price"><br>
-    <label for="miniatureUrl">Miniature: </label><br>
-    <input type="text" name="miniatureUrl"><br>
-    <label for="estimatedTime">Estimated time: </label><br>
-    <input type="number" name="estimatedTime"><br>
-    <button type="submit">Add delivery</button>
-  </form>
-  <% deliveries.forEach( delivery => { %>
-    <form method="POST" action="/deliveries/delete/<%= delivery._id %>">
-      <li> <%= delivery.name %> <%= delivery.price %> PLN <%= delivery.miniatureUrl %> <%= delivery.estimatedTime %><button type="submit">Delete</button></li>
-    </form>
-  <% }) %>
+<body class="vh-100">
+  <header class="bg-secondary d-flex flex-wrap justify-content-center py-2">
+    <h2>Deliveries administration panel</h2>
+  </header>
+  <div class="bg-secondary">
+    <nav class="container d-flex flex-row justify-content-between bg-primary shadow px-3 py-3 rounded">
+      <form method="GET" action="/games">
+        <button class="btn btn-secondary" type="submit">Games</button>
+      </form>
+      <form method="GET" action="/users">
+        <button class="btn btn-secondary" type="submit">Users</button>
+      </form>
+      <form method="GET" action="/orders">
+        <button class="btn btn-secondary" type="submit">Orders</button>
+      </form>
+      <form method="POST" action="/users/logout">
+        <button class="btn btn-secondary" type="submit">Logout</button>
+      </form>
+    </nav>
+    <div class="container vh-100 py-5">
+      <table class="table table-dark rounded-2">
+        <thead>
+          <tr>
+            <th scope="col">Title</th>
+            <th scope="col">Price</th>
+            <th scope="col">Miniature URL</th>
+            <th scope="col">Estimated time</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% deliveries.forEach( delivery => { %>
+            <tr>
+              <td scope="col"><%= delivery.name %></td>
+              <td scope="col"><%= delivery.price %></td>
+              <td scope="col"><%= delivery.miniatureUrl %></td>
+              <td scope="col"><%= delivery.estimatedTime %></td>
+              <td scope="col">
+                <form method="POST" action="/deliveries/delete/<%= delivery._id %>">
+                  <button class="btn btn-secondary" type="submit">Delete</button>
+                </form>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+      <div>
+        <form method="POST" action="/deliveries">
+          <label for="name">Name: </label><br>
+          <input class="form-control" type="text" name="name"><br>
+          <label for="price">Price: </label><br>
+          <input class="form-control" type="number" name="price"><br>
+          <label for="miniatureUrl">Miniature: </label><br>
+          <input class="form-control" type="text" name="miniatureUrl"><br>
+          <label for="estimatedTime">Estimated time: </label><br>
+          <input class="form-control" type="number" name="estimatedTime"><br>
+          <button class="btn btn-primary" type="submit">Add delivery</button>
+        </form>
+      </div>
+    </div>
+    <footer class="d-flex flex-wrap align-items-center justify-content-center bg-primary shadow py-4 navbar fixed-bottom">
+    </footer>
+  </div>
 </body>
 </html>
