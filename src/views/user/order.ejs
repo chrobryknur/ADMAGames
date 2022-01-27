@@ -30,6 +30,7 @@
             <thead>
               <tr>
                 <th scope="col">No.</th>
+                <th scope="col">Miniature</th>
                 <th scope="col">Title</th>
                 <th scope="col">Price</th>
               </tr>
@@ -37,7 +38,10 @@
             <tbody>
               <% cart.forEach((game, i) => { %>
                 <tr>
-                  <td scope="col"><%= i %></td>
+                  <td scope="col"><%= i + 1 %></td>
+                  <td scope="col">
+                    <img style="max-width: 6vh; max-height: 4vh;" src="/uploads/<%= game.miniatureFile %>">
+                  </td>
                   <td scope="col"><%= game.title %></td>
                   <td scope="col"><%= game.price %> PLN</td>
                 </tr>

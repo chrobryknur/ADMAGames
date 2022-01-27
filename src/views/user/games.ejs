@@ -27,7 +27,7 @@
           <div class="col">
             <div class="d-flex flex-column bg-primary m-3 p-2 rounded-2">
               <div style="height:20vh; text-align: center; overflow:hidden;" >
-                <img src="<%= game.miniatureUrl %>">
+                <img src="/uploads/<%= game.miniatureFile %>">
               </div>
               <div style="width: 100%; text-align: center;">
                 <form method="POST" action='/users/cart/add/<%= game._id %>'>

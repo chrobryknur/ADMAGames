@@ -1,5 +1,4 @@
 const { Router } = require('express');
-const { date } = require('joi');
 const adminVerification = require('../middleware/adminVerification');
 const orderValidation = require('../middleware/orderValidation');
 const { Delivery } = require('../models/delivery');
@@ -29,10 +28,10 @@ router.get('/', async (req, res, next) => {
 
 router.post('/', orderValidation, async (req, res, next) => {
   const userId = req.session.user._id;
-  const { password, admin, cart: games, ...user } = await User.findById(userId);
-  // if (!user) return next(invalidUserError());
+  const { password, admin, cart: games, ...userData } = await User.findById(userId);
 
-  const { delivery: deliveryId, phoneNumber, ...address } = req.body;
+  const { name, surname, email, delivery: deliveryId, phoneNumber, ...address } = req.body;
+  const user = { ...userData._doc, name, surname, email };
   const delivery = await Delivery.findById(deliveryId);
   const price = games.reduce((sum, game) => sum + game.price, 0) + delivery.price;
   const date = new Date();

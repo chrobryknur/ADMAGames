@@ -9,6 +9,7 @@ const usersRouter = require('./routes/users');
 const gamesRouter = require('./routes/games');
 const deliveriesRouter = require('./routes/deliveries');
 const ordersRouter = require('./routes/orders');
+const uploadsRouter = require('./routes/uploads');
 const getAction = require("./middleware/getAction");
 // const { notFound, errorHandler } = require("./middleware/error");
 
@@ -22,6 +23,7 @@ const app = express();
 
 app.set('view engine', 'ejs');
 app.set('views', 'src/views');
+app.use(express.static('src/uploads'));
 app.use(express.static('src/public'));
 
 app.use(express.json());
@@ -48,6 +50,7 @@ app.use("/users", usersRouter);
 app.use('/games', gamesRouter);
 app.use('/deliveries', deliveriesRouter);
 app.use('/orders', ordersRouter);
+app.use('/uploads', uploadsRouter);
 
 //Error handling
 // app.use(notFound);

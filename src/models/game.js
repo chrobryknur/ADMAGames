@@ -8,7 +8,7 @@ const GameSchema = new Schema({
   price: Number,
   year: Number,
   category: String,
-  miniatureUrl: String,
+  miniatureFile: String,
   description: String,
 }, options);
 

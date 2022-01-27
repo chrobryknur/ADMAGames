@@ -5,7 +5,6 @@ const gameSchema = Joi.object({
   price: Joi.number().min(0).max(99999).required(),
   year: Joi.number().min(1900).max(new Date().getFullYear() + 2).required(),
   category: Joi.string().min(1).max(100).required(),
-  miniatureUrl: Joi.string().uri().required(),
   description: Joi.string().min(1).max(300),
 });
 
