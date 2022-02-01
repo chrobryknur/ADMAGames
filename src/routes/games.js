@@ -23,7 +23,6 @@ router.get('/', (req, res, next) => {
       if (!user.admin) return res.render('user/games', { games, cartSize: user.cartSize });
       return res.render('admin/games', { games });
     })
-    .catch((error) => next(error));
 });
 
 router.post('/', adminVerification, upload.single('miniature'), gameValidation, async (req, res, next) => {
@@ -33,14 +32,14 @@ router.post('/', adminVerification, upload.single('miniature'), gameValidation, 
 
   const { titleUsed, error } = await Game.findOne({ title })
     .then((game) => ({ titleUsed: game !== null }))
-    .catch((error) => ({ error }));
+
   if (error) return next(error);
   if (titleUsed) return next(titleUsedError(title));
 
   const game = { ...req.body, miniatureFile: file.filename };
   Game.create(game)
     .then(() => res.redirect('/games'))
-    .catch((error) => next(error));
+
 });
 
 router.post('/modify/:_id', adminVerification, (req, res, next) => {
@@ -48,15 +47,17 @@ router.post('/modify/:_id', adminVerification, (req, res, next) => {
   const { action } = req;
 
   if (action === 'delete') {
-    Game.deleteOne({ _id })
-      .then(({ deletedCount }) => res.redirect('/games'))
-      .catch((error) => next(error));
+    Game.findOneAndDelete({ _id })
+      .then(({miniatureFile}) => {
+        fs.unlinkSync(`uploads/${miniatureFile}`);
+        res.redirect('/games');
+      })
+
   } else if (action === 'update') {
     const game = req.body;
 
     Game.updateOne({ _id }, game)
       .then(() => res.redirect('/games'))
-      .catch((error) => next(error));
   }
 });
 
@@ -68,7 +69,7 @@ router.get('/:_id', (req, res, next) => {
       if (!user) return res.render('guest/game', { game });
       return res.render('user/game', { game, cartSize: user.cartSize });
     })
-    .catch((error) => next(error));
+
 });
 
 module.exports = router;

@@ -32,11 +32,11 @@
               <div style="width: 100%; text-align: center;">
                 <form method="POST" action='/users/cart/add/<%= game._id %>'>
                   <b><%= game.title %></b>
-                  <p><%= game.price %>PLN</p>
+                  <p><%= game.price.toFixed(2) %>PLN</p>
                   <button class="btn btn-secondary" type="submit">Add to cart</button></li>
                 </form>
                 <form method="GET" action='/games/<%=game._id%>'>
-                  <button class="btn btn-secondary" type="submit">Details</button>
+                  <button class="btn btn-secondary mt-2" type="submit">Details</button>
                 </form>
               </div>
             </div>

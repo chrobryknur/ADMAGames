@@ -38,8 +38,8 @@
             <tr>
               <form method="POST" action='/users/cart/remove/<%= game._id %>'>
                 <td scope="col"><%= game.title %></td>
-                <td scope="col"><%= game.price %></td>
-                <td scope="col"><button class="btn btn-primary" type="submit">Delete</button></td>
+                <td scope="col"><%= game.price.toFixed(2) %></td>
+                <td scope="col"><button class="btn btn-danger" type="submit">Delete</button></td>
               </form>
             </tr>
           <% }) %>

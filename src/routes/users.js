@@ -16,11 +16,10 @@ const router = Router();
 router.post('/register', userValidation, async (req, res, next) => {
   const { email, password } = req.body;
 
-  const { emailUsed, error } = await User.findOne({ email })
+  const { emailUsed } = await User.findOne({ email })
     .then((user) => ({ emailUsed: user !== null }))
-    .catch((error) => ({ error }));
-  if (error) return next(error);
-  if (emailUsed) return next(emailUsedError(email));
+
+  if (emailUsed) return res.render('guest/login', {registerError: "Email already in use"});
 
   const users = await User.findOne({});
   if (!users) {
@@ -36,20 +35,17 @@ router.post('/register', userValidation, async (req, res, next) => {
       req.session.user = { _id, admin, cartSize: cart.length }
       res.redirect('/games');
     })
-    .catch((error) => next(error));
 });
 
-router.post('/login', /*userValidation,*/ async (req, res, next) => {
+router.post('/login', async (req, res, next) => {
   const { email, password } = req.body;
 
   const { user, error } = await User.findOne({ email })
     .then((user) => ({ user }))
-    .catch((error) => ({ error }));
-  if (error) return next(error);
-  if (!user) return next(loginError());
+  if (!user) return res.render('guest/login', {loginError: "Invalid username or password"});
 
   const passwordValid = bcrypt.compareSync(password, user.password);
-  if (!passwordValid) return next(loginError());
+  if (!passwordValid) return res.render('guest/login', {loginError: "Invalid username or password"});
 
   const { _id, admin, cart } = user;
   req.session.user = { _id, admin, cartSize: cart.length };
@@ -67,7 +63,6 @@ router.get('/cart', (req, res, next) => {
 
   User.findById(user._id)
     .then((user) => res.render('user/cart', { user }))
-    .catch((error) => next(error));
 });
 
 router.get('/cart/:_id', adminVerification, (req, res, next) => {
@@ -75,7 +70,6 @@ router.get('/cart/:_id', adminVerification, (req, res, next) => {
 
   User.findById(_id)
     .then((user) => res.render('admin/cart', { user }))
-    .catch((error) => next(error));
 });
 
 router.post('/cart/add/:gameId', async (req, res, next) => {
@@ -93,7 +87,6 @@ router.post('/cart/add/:gameId', async (req, res, next) => {
       req.session.user.cartSize = user.cart.length;
       res.redirect('/games');
     })
-    .catch((error) => next(error));
 });
 
 router.post('/cart/remove/:gameId', async (req, res, next) => {
@@ -106,13 +99,11 @@ router.post('/cart/remove/:gameId', async (req, res, next) => {
       req.session.user.cartSize = user.cart.length;
       res.redirect('/users/cart');
     })
-    .catch((error) => next(error));
 });
 
 router.get('/', adminVerification, async (req, res, next) => {
   User.find({})
     .then((users) => res.render('admin/users', {users}))
-    .catch((error) => next(error));
 })
 
 router.post('/admin/:_id', adminVerification, async (req, res, next) => {
@@ -124,24 +115,19 @@ router.post('/admin/:_id', adminVerification, async (req, res, next) => {
   if (action === 'delete') {
     User.deleteOne({ _id })
       .then(({ deletedCount }) => res.redirect('/users'))
-      .catch((error) => next(error));
   } else if (action === 'admin') {
     const user = await User.findById(_id);
     User.updateOne({ _id }, { admin: !user.admin})
       .then(() => {
         res.redirect('/users');
       })
-      .catch((error) => next(error));
   } else if (action === 'cart') {
     res.redirect(`/users/cart/${_id}`);
   }
-
-
 })
 
 router.post('/delete/:_id', adminVerification, async (req, res, next) => {
   const { _id } = req.params;
-
 });
 
 module.exports = router;

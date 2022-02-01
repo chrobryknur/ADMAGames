@@ -11,7 +11,6 @@ const deliveriesRouter = require('./routes/deliveries');
 const ordersRouter = require('./routes/orders');
 const uploadsRouter = require('./routes/uploads');
 const getAction = require("./middleware/getAction");
-// const { notFound, errorHandler } = require("./middleware/error");
 
 //Connect to database
 const dbUsername = "adma";
@@ -43,18 +42,13 @@ app.use(express.json());
 app.use(morgan("common"));
 app.use(cors({ origin: "*" }));
 
-
 //Routes
-app.get("/", (req, res) => res.redirect('login'));
+app.get(["/", "/login"], (req, res) => res.render('guest/login'));
 app.use("/users", usersRouter);
 app.use('/games', gamesRouter);
 app.use('/deliveries', deliveriesRouter);
 app.use('/orders', ordersRouter);
 app.use('/uploads', uploadsRouter);
-
-//Error handling
-// app.use(notFound);
-// app.use(errorHandler);
 
 //Listen
 const port = 3000;

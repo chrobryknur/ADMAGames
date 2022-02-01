@@ -29,7 +29,7 @@
         <div style="width: 100%; text-align: center;">
           <form method="POST" action='/users/cart/add/<%= game._id %>'>
             <b><%= game.title %></b>
-            <p><%= game.price %>PLN</p>
+            <p><%= game.price.toFixed(2) %>PLN</p>
             <p><%= game.description %></p>
             <button class="btn btn-secondary" type="submit">Add to cart</button></li>
           </form>

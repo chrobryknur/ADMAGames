@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="../style/bootstrap.css">
+  <link rel="stylesheet" href="/style/bootstrap.css">
   <title>Starting page</title>
 </head>
 <body class="vh-100">
@@ -23,6 +23,11 @@
         <div class="form-group col align-items-center justify-content-center">
           <h2 class="pb-3">Register</h2>
           <div style="width: 50%;">
+            <div>
+              <% if(locals.registerError){ %>
+                <p><%=locals.registerError%></p>
+              <% } %>
+            </div>
             <form method="POST" action="/users/register">
               <label for="email">Email: </label><br>
               <input class="form-control" type="email" name="email"><br>
@@ -39,6 +44,11 @@
         <div class="form-group col align-items-center justify-content-center">
           <h2 class="pb-3">Log in</h2>
           <div style="width: 50%;">
+            <div>
+              <% if(locals.loginError){ %>
+                <p><%=locals.loginError%></p>
+              <% } %>
+            </div>
             <form method="POST" action="/users/login">
               <label for="email">Email: </label><br>
               <input class="form-control" type="email" name="email"><br>

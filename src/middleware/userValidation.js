@@ -14,7 +14,7 @@ const userValidation = (req, res, next) => {
       req.body = user;
       next();
     })
-    .catch((error) => res.redirect('/login'));
+    .catch((error) => res.render('guest/login', {registerError: error.toString().replace('ValidationError: ','')}));
 };
 
 module.exports = userValidation;

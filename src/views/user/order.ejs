@@ -43,7 +43,7 @@
                     <img style="max-width: 6vh; max-height: 4vh;" src="/uploads/<%= game.miniatureFile %>">
                   </td>
                   <td scope="col"><%= game.title %></td>
-                  <td scope="col"><%= game.price %> PLN</td>
+                  <td scope="col"><%= game.price.toFixed(2) %> PLN</td>
                 </tr>
               <% }) %>
             </tbody>
@@ -64,7 +64,7 @@
                 <select class="form-select" name="delivery">
                   <% deliveries.forEach((delivery) => { %>
                     <option value="<%= delivery._id %>">
-                      <%= delivery.name %> <%= delivery.price %> PLN
+                      <%= delivery.name %> <%= delivery.price.toFixed(2) %> PLN
                     </option>
                   <% }) %>
                 </select>

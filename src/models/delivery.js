@@ -6,7 +6,6 @@ const options = { timestapms: true };
 const DeliverySchema = new Schema({
   name: String,
   price: Number,
-  miniatureUrl: String,
   estimatedTime: Number
 }, options);
 

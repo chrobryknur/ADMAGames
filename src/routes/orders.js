@@ -23,7 +23,6 @@ router.get('/', async (req, res, next) => {
       orders = orders.map((order) => ({ ...order._doc, date: order._doc.date.toLocaleString()}))
       return res.render('admin/orders', { orders });
     })
-    .catch((error) => next(error));
 });
 
 router.post('/', orderValidation, async (req, res, next) => {
@@ -44,7 +43,6 @@ router.post('/', orderValidation, async (req, res, next) => {
       req.session.user.cartSize = 0;
       res.redirect('/games')
     })
-    .catch((error) => next(error));
 });
 
 module.exports = router;

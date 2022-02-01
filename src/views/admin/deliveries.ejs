@@ -33,7 +33,6 @@
           <tr>
             <th scope="col">Title</th>
             <th scope="col">Price</th>
-            <th scope="col">Miniature URL</th>
             <th scope="col">Estimated time</th>
             <th scope="col"></th>
           </tr>
@@ -42,12 +41,11 @@
           <% deliveries.forEach( delivery => { %>
             <tr>
               <td scope="col"><%= delivery.name %></td>
-              <td scope="col"><%= delivery.price %></td>
-              <td scope="col"><%= delivery.miniatureUrl %></td>
+              <td scope="col"><%= delivery.price.toFixed(2) %></td>
               <td scope="col"><%= delivery.estimatedTime %></td>
               <td scope="col">
                 <form method="POST" action="/deliveries/delete/<%= delivery._id %>">
-                  <button class="btn btn-secondary" type="submit">Delete</button>
+                  <button class="btn btn-danger" type="submit">Delete</button>
                 </form>
               </td>
             </tr>
@@ -60,8 +58,6 @@
           <input class="form-control" type="text" name="name"><br>
           <label for="price">Price: </label><br>
           <input class="form-control" type="number" step="0.01" name="price"><br>
-          <label for="miniatureUrl">Miniature: </label><br>
-          <input class="form-control" type="text" name="miniatureUrl"><br>
           <label for="estimatedTime">Estimated time: </label><br>
           <input class="form-control" type="number" name="estimatedTime"><br>
           <button class="btn btn-primary" type="submit">Add delivery</button>

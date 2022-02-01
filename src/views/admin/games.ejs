@@ -56,7 +56,7 @@
                 <td scope="col"><input class="form-control" name="category" type="text" value="<%= game.category %>"></td>
                 <td scope="col"><input class="form-control" name="description" type="text" value="<%= game.description %>"></td>
                 <td scope="col"><button class="btn btn-primary" type="submit" name="action" value="update">Update</button></td>
-                <td scope="col"><button class="btn btn-secondary" type="submit" name="action" value="delete">Delete</button></td>
+                <td scope="col"><button class="btn btn-danger" type="submit" name="action" value="delete">Delete</button></td>
               </form>
             </tr>
           <% }) %>
@@ -83,7 +83,7 @@
                 <input class="form-control" type="text" name="description"><br>
                 <label for="miniature">Miniature: </label><br>
                 <input class="form-control" type="file" name="miniature">
-                <button class="btn btn-primary" type="submit">Add game</button>
+                <button class="btn btn-primary mt-2" type="submit">Add game</button>
               </div>
             </div>
           </div>

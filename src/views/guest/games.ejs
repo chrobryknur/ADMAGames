@@ -28,7 +28,7 @@
               </div>
               <div style="width: 100%; text-align: center;">
                 <b><%= game.title %></b>
-                <p><%= game.price %> PLN</p>
+                <p><%= game.price.toFixed(2) %> PLN</p>
                 <form method="GET" action='/games/<%=game._id%>'>
                   <button class="btn btn-secondary" type="submit">Details</button>
                 </form>

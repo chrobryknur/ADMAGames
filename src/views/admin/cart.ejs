@@ -42,7 +42,7 @@
           <% user.cart.forEach( game => { %>
             <tr>
               <td scope="col"><%= game.title %></td>
-              <td scope="col"><%= game.price %> PLN</td>
+              <td scope="col"><%= game.price.toFixed(2) %> PLN</td>
             </tr>
           <% }) %>
         </tbody>

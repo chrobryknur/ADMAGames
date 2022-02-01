@@ -45,7 +45,7 @@
               <td><%= order.user.name %></td>
               <td><%= order.user.surname %></td>
               <td><%= order.user.email %></td>
-              <td><%= order.price %> PLN</td>
+              <td><%= order.price.toFixed(2) %> PLN</td>
             </tr>
           <% }) %>
         </tbody>
