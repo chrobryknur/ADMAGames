@@ -1,9 +1,10 @@
-const express = require("express");
-const morgan = require("morgan");
-const cors = require("cors");
+const express = require('express');
+const morgan = require('morgan');
+const cors = require('cors');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
+require('dotenv').config();
 
 const usersRouter = require('./routes/users');
 const gamesRouter = require('./routes/games');
@@ -13,9 +14,8 @@ const uploadsRouter = require('./routes/uploads');
 const getAction = require("./middleware/getAction");
 
 //Connect to database
-const dbUsername = "adma";
-const dbPassword = "0fmCwX3yGNw2CthK";
-const dbURI = `mongodb+srv://adma:${dbPassword}@${dbUsername}.bt1e7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
+const dbPassword = env.PASSWORD;
+const dbURI      = env.URI.replace('<password>', dbPassword);
 mongoose.connect(dbURI);
 
 const app = express();
